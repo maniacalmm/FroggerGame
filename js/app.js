@@ -8,7 +8,7 @@ var Enemy = function(row, speed) {
     // The image/sprite for our enemies, this uses
     // a helper we've provided to easily load images
     this.sprite = 'images/enemy-bug.png';
-    this.x = 0;
+    this.x = -150;
     this.y = row;
     this.speed = speed;
 };
@@ -21,7 +21,8 @@ Enemy.prototype.update = function(dt) {
     // all computers.
     this.x = this.x + dt * this.speed;
     if (this.x >= 505) {
-        this.x = randomRow();
+        this.y = randomRow();
+        this.x = 0;
         this.speed = randomSpeed();
     }
 
@@ -39,20 +40,33 @@ Enemy.prototype.render = function() {
 
 var Player = function() {
     this.sprite = 'images/char-horn-girl.png';
-    this.x = 0;
-    this.y = 3;
+    this.x = 2;
+    this.y = 5;
 }
 
-Player.prototype.update = function(dt) {
-
+Player.prototype.update = function() {
+    // update function is already handled within handleInput
 }
 
 Player.prototype.render = function() {
-    ctx.drawImage(Resources.get(this.sprite), this.x, this.y * 75);
+    ctx.drawImage(Resources.get(this.sprite), this.x * 101, this.y * 80);
 }
 
-Player.prototype.handleInput = function() {
-
+Player.prototype.handleInput = function(direction) {
+    switch(direction) {
+        case 'up':
+            if (this.y != 1) this.y = this.y - 1;
+            break;
+        case 'down':
+            if (this.y != 5) this.y = this.y + 1;
+            break;
+        case 'left':
+            if (this.x != 0) this.x = this.x - 1;
+            break;
+        case 'right':
+            if (this.x != 4) this.x = this.x + 1;
+            break;
+    }
 }
 
 // this function generate bug with random position and speed,
@@ -97,4 +111,11 @@ document.addEventListener('keyup', function(e) {
     };
     console.log(e.keyCode + " pressed!");
     player.handleInput(allowedKeys[e.keyCode]);
+});
+
+document.getElementById('button').addEventListener('click', function() {
+    while(allEnemies.length) allEnemies.pop();
+    bugGenerator();
+    player.x = 2;
+    player.y = 5;
 });

@@ -25,6 +25,8 @@ var Engine = (function(global) {
         ctx = canvas.getContext('2d'),
         lastTime;
 
+    var loopID;
+
     canvas.width = 505;
     canvas.height = 606;
     doc.body.appendChild(canvas);
@@ -57,7 +59,7 @@ var Engine = (function(global) {
         /* Use the browser's requestAnimationFrame function to call this
          * function again as soon as the browser is able to draw another frame.
          */
-        win.requestAnimationFrame(main); // I suppose this is the loop
+        loopID = win.requestAnimationFrame(main); // I suppose this is the loop
     }
 
     /* This function does some initial setup that should only occur once,
@@ -68,6 +70,24 @@ var Engine = (function(global) {
         reset();
         lastTime = Date.now();
         main();
+    }
+
+    function checkCollisions() {
+        allEnemies.forEach(function(enemy) {
+            let err = Math.abs(enemy.x / 101 - player.x);
+            //console.log(enemy.x / 83);
+            if (enemy.y == player.y && err < 0.7) {
+                player.x = 2;
+                player.y = 5;
+                return;
+            }
+        });
+    }
+
+    function checkSuccess() {
+        if (player.y == 1) {
+            while(allEnemies.length) allEnemies.pop();
+        }
     }
 
     /* This function is called by main (our game loop) and itself calls all
@@ -81,7 +101,8 @@ var Engine = (function(global) {
      */
     function update(dt) {
         updateEntities(dt);
-        // checkCollisions();
+        checkCollisions();
+        checkSuccess();
     }
 
     /* This is called by the update function and loops through all of the
@@ -163,8 +184,9 @@ var Engine = (function(global) {
      * those sorts of things. It's only called once by the init() method.
      */
     function reset() {
-        // noop
+        win.cancelAnimationFrame(loopID);
     }
+
 
     /* Go ahead and load all of the images we know we're going to need to
      * draw our game level. Then set init as the callback method, so that when
