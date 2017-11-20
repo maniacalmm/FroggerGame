@@ -47,39 +47,39 @@ var Player = function() {
     this.sprite = 'images/char-horn-girl.png';
     this.x = 2;
     this.y = 5;
-}
+};
 
 Player.prototype.update = function() {
     // update function is already handled within handleInput
-}
+};
 
 Player.prototype.render = function() {
     ctx.drawImage(Resources.get(this.sprite), this.x * 101, this.y * 80);
-}
+};
 
 // handles input direction for updating the player's position
 Player.prototype.handleInput = function(direction) {
     switch(direction) {
         case 'up':
-            if (this.y != 1) this.y = this.y - 1;
+            if (this.y !== 1) this.y = this.y - 1;
             break;
         case 'down':
-            if (this.y != 5) this.y = this.y + 1;
+            if (this.y !== 5) this.y = this.y + 1;
             break;
         case 'left':
-            if (this.x != 0) this.x = this.x - 1;
+            if (this.x !== 0) this.x = this.x - 1;
             break;
         case 'right':
-            if (this.x != 4) this.x = this.x + 1;
+            if (this.x !== 4) this.x = this.x + 1;
             break;
     }
-}
+};
 
 // this function generate bug with random position and speed,
 // also check for bugs that's outside of the box, and eliminate these bugs
 function bugGenerator() {
     while(allEnemies.length <= MaxEnemy) {
-        allEnemies.push(new Enemy(randomRow(), randomSpeed()))
+        allEnemies.push(new Enemy(randomRow(), randomSpeed()));
     }
 
     console.log(allEnemies);
