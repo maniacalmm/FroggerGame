@@ -1,6 +1,7 @@
-//Tang
 // Enemies our player must avoid
+// maximum number of bugs
 var MaxEnemy = 5;
+
 var Enemy = function(row, speed) {
     // Variables applied to each of our instances go here,
     // we've provided one for you to get started
@@ -8,8 +9,11 @@ var Enemy = function(row, speed) {
     // The image/sprite for our enemies, this uses
     // a helper we've provided to easily load images
     this.sprite = 'images/enemy-bug.png';
+    // initial position of bugs
     this.x = -150;
     this.y = row;
+
+    //intial speed of bugs
     this.speed = speed;
 };
 
@@ -20,6 +24,7 @@ Enemy.prototype.update = function(dt) {
     // which will ensure the game runs at the same speed for
     // all computers.
     this.x = this.x + dt * this.speed;
+    // when the bugs moves outside of windows, reset it's position and speed
     if (this.x >= 505) {
         this.y = randomRow();
         this.x = 0;
@@ -52,6 +57,7 @@ Player.prototype.render = function() {
     ctx.drawImage(Resources.get(this.sprite), this.x * 101, this.y * 80);
 }
 
+// handles input direction for updating the player's position
 Player.prototype.handleInput = function(direction) {
     switch(direction) {
         case 'up':
@@ -84,10 +90,12 @@ function randomInt(max, min) {
     return Math.floor(Math.random() * max) + min;
 }
 
+// generate a random intial speed for bug
 function randomSpeed() {
     return randomInt(100, 20);
 }
 
+// generate a random number between 3 and 1 for bug
 function randomRow() {
     return randomInt(3, 1);
 }
@@ -113,6 +121,7 @@ document.addEventListener('keyup', function(e) {
     player.handleInput(allowedKeys[e.keyCode]);
 });
 
+// eventlistener for reset button
 document.getElementById('button').addEventListener('click', function() {
     while(allEnemies.length) allEnemies.pop();
     bugGenerator();

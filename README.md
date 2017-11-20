@@ -1,6 +1,18 @@
-frontend-nanodegree-arcade-game
+Frogger
 ===============================
 
-Students should use this [rubric](https://review.udacity.com/#!/projects/2696458597/rubric) for self-checking their submission. Make sure the functions you write are **object-oriented** - either class functions (like Player and Enemy) or class prototype functions such as Enemy.prototype.checkCollisions, and that the keyword 'this' is used appropriately within your class and class prototype functions to refer to the object the function is called upon. Also be sure that the **readme.md** file is updated with your instructions on both how to 1. Run and 2. Play your arcade game.
+## How to play
+Clone the fill to your local machine by
+~~~
+https://github.com/maniacalmm/FroggerGame.git
+~~~
+and make sure every files is in the same folder, open the index.html file in your browser(Chrome preferably).
 
-For detailed instructions on how to get started, check out this [guide](https://docs.google.com/document/d/1v01aScPjSWCCWQLIpFqvg3-vXLH2e8_SZQKC8jNO0Dc/pub?embedded=true).
+## How it works
+1. Player's movement is control by arrow keys: up, down, left, right.
+
+2. The game is divided into three region, green lawn, rock, and river.
+
+3. Player should try to get to the top layer of rock near the river without bumpping into any of the bugs that moves across the rock layer.
+
+4. If successful, upon touching the last layer of rock, all bugs will disappear, and the player can start another round by clicking the "start" button.
